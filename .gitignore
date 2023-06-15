@@ -1,5 +1,5 @@
 node_modules/
-openai_key.text
-openai_*.text
-google_*.text
+*.text
+*.mp3
+*.mp4
 service-account-bbsnetwork-dev.json

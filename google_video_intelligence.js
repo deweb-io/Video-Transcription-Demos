@@ -23,7 +23,12 @@ async function analyzeVideoTranscript(video) {
     videoContext: videoContext,
   };
 
-  fs.rmSync('google_video_intelligence.text');
+  // don't fail if there's no file
+  try {
+    fs.rmSync('google_video_intelligence.text');
+  } catch(err) {
+    console.log(err)
+  };
 
   const [operation] = await client.annotateVideo(request);
   console.log('Waiting for operation to complete...');
