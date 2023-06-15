@@ -1,0 +1,5 @@
+node_modules/
+openai_key.text
+openai_*.text
+google_*.text
+service-account-bbsnetwork-dev.json
