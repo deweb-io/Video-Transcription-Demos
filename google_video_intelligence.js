@@ -8,7 +8,7 @@ const credentials = JSON.parse(fs.readFileSync('./service-account-bbsnetwork-dev
 // Creates a client
 const client = new videoIntelligence.VideoIntelligenceServiceClient({credentials});
 
-async function analyzeVideoTranscript(video) {
+async function analyzeVideoTranscript(file, outputPath) {
   const videoContext = {
     speechTranscriptionConfig: {
       max_alternatives: 1,
@@ -18,17 +18,15 @@ async function analyzeVideoTranscript(video) {
   };
 
   const request = {
-    inputUri: video,
+    inputUri: file,
     features: ['SPEECH_TRANSCRIPTION'],
     videoContext: videoContext,
   };
 
-  // don't fail if there's no file
-  try {
-    fs.rmSync('google_video_intelligence.text');
-  } catch(err) {
-    console.log(err)
-  };
+   // don't fail if there's no file
+   try {
+    fs.rmSync(outputPath);
+  } catch(err) {};
 
   const [operation] = await client.annotateVideo(request);
   console.log('Waiting for operation to complete...');
@@ -46,7 +44,7 @@ async function analyzeVideoTranscript(video) {
       console.log('Alternative level information:');
       console.log(`Transcript: ${alternative.transcript}`);
 
-      fs.appendFileSync('google_video_intelligence.text', alternative.transcript);
+      fs.appendFileSync(outputPath, alternative.transcript);
 
       console.log(`Confidence: ${alternative.confidence}`);
       console.log('Word level information:');
