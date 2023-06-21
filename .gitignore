@@ -4,4 +4,4 @@ output/
 *.text
 *.mp3
 *.mp4
-service-account-bbsnetwork-dev.json
+service-account-*.json
