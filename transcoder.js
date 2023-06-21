@@ -13,11 +13,11 @@ const request = {
     parent: transcoder.locationPath(projectId, location),
     // video and audio
     // job: {
-    //     inputUri: "gs://bbsnetwork-dev.appspot.com/Aq3wiqFAucK0AG10sdyl.mp4",
+    //     inputUri: 'gs://bbsnetwork-dev.appspot.com/Aq3wiqFAucK0AG10sdyl.mp4',
     //     config: {
     //       elementaryStreams: [
     //         {
-    //           key: "video-stream1",
+    //           key: 'video-stream1',
     //           videoStream: {
     //             h264: {
     //               bitrateBps: 2000000,
@@ -26,32 +26,32 @@ const request = {
     //           }
     //         },
     //         {
-    //             "key": "audio-stream1",
-    //             "audioStream": {
-    //             "bitrateBps": 128000,
-    //             "codec": "mp3",
+    //             'key': 'audio-stream1',
+    //             'audioStream': {
+    //             'bitrateBps': 128000,
+    //             'codec': 'mp3',
     //         }
     //         }
     //       ],
     //       muxStreams: [
     //         {
-    //           fileName: "Aq3wiqFAucK0AG10sdyl.mp4",
-    //           key: "hd",
-    //           container: "mp4",
-    //           elementaryStreams: ["video-stream1", "audio-stream1"]
+    //           fileName: 'Aq3wiqFAucK0AG10sdyl.mp4',
+    //           key: 'hd',
+    //           container: 'mp4',
+    //           elementaryStreams: ['video-stream1', 'audio-stream1']
     //         },
     //         {
               
-    //             "fileName": "Aq3wiqFAucK0AG10sdyl.mp3",
-    //             "key": "audio-mp3",
-    //             "container": "mp4",
-    //             "elementaryStreams": ["audio-stream1"]
+    //             'fileName': 'Aq3wiqFAucK0AG10sdyl.mp3',
+    //             'key': 'audio-mp3',
+    //             'container': 'mp4',
+    //             'elementaryStreams': ['audio-stream1']
               
     //         }
     //       ],
     //       spriteSheets: [
     //         {
-    //           filePrefix: "Aq3wiqFAucK0AG10sdyl.mp4",
+    //           filePrefix: 'Aq3wiqFAucK0AG10sdyl.mp4',
     //           spriteWidthPixels: 512,
     //           columnCount: 1,
     //           rowCount: 1,
@@ -59,7 +59,7 @@ const request = {
     //         }
     //       ],
     //       output: {
-    //         uri: "gs://bbsnetwork-dev.appspot.com/transcoder/"
+    //         uri: 'gs://bbsnetwork-dev.appspot.com/transcoder/'
     //       }
     //     }
     //   }
@@ -80,10 +80,10 @@ const request = {
                     }
                 },
                 {
-                    key: "audio-stream1",
+                    key: 'audio-stream1',
                     audioStream: {
-                        bitrateBps: 128000,
-                        codec: "mp3",
+                        bitrateBps: 128000, // 128kbps
+                        codec: 'mp3',
                     }
             }
             ],
@@ -95,10 +95,10 @@ const request = {
                     elementaryStreams: ['video-stream1', 'audio-stream1'],
                 },
                 {
-                    fileName: "Aq3wiqFAucK0AG10sdyl-audio.mp4",
-                    key: "audio-mp3",
-                    container: "mp4",
-                    elementaryStreams: ["audio-stream1"]  
+                    fileName: 'Aq3wiqFAucK0AG10sdyl-audio-mp3.mp4',
+                    key: 'audio-mp3',
+                    container: 'mp4',
+                    elementaryStreams: ['audio-stream1']  
                 }
             ],
             spriteSheets: [
