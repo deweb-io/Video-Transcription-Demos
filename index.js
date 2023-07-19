@@ -14,19 +14,14 @@ try {
 } catch(err) {};
 
 
-async function getFileFromStorage(file, mediaType) {
+async function getBufferFileFromStorage(file) {
   const storage = new Storage({keyFilename: 'service-account-creatoreco-stage.json'});
   const bucketName = 'creator-eco-stage.appspot.com';
   const fileObject = storage.bucket(bucketName).file(`media/${file}`);
-  const type = (await fileObject.getMetadata())[0]['contentType'].split('/')[1];
 
   // Downloads the file into a buffer in memory.
   const bufferArray = await fileObject.download();
-  const name = `media/${mediaType}/${file}.${type != 'x-m4a' ? type : 'm4a'}`;
-  fs.writeFileSync(name, bufferArray[0]);
-  console.log(`wrote file:${name}`);
-
-  return name;
+  return bufferArray[0];
 }
 
 async function openaiWhisperLocal() {
@@ -34,15 +29,16 @@ async function openaiWhisperLocal() {
   const mediaFile = `${mediaDir}/video/${file}`;
   console.log(`will transcribe: ${mediaFile}`);
   const format = 'srt';
-  await openai.transcribe(mediaFile, `${outputDir}/openai_${file.split('.')[0]}_${file.split('.')[1]}.${format}`, format);
+  await openai.transcribeFilePath(mediaFile, `${outputDir}/openai_${file.split('.')[0]}_${file.split('.')[1]}.${format}`, format);
 }
 
+// This function demonstrates a real usage on google cloud function.
 async function openaiWhisperStorage() {
-  const file = '0s4OAgEzcBPm0HfrH2B1';
-  const mediaFile = await getFileFromStorage(file, 'audio');
-  console.log(`will transcribe: ${mediaFile}`);
-  const format = 'srt';
-  await openai.transcribe(mediaFile, `${outputDir}/openai_${file.split('.')[0]}_${file.split('.')[1]}.${format}`, format);
+  const file = '0ctZiGonbQRmd0sYy1bV';
+  const buffer = await getBufferFileFromStorage(file);
+  console.log(`will transcribe: ${file} from storage`);
+  const format = 'text';
+  await openai.transcribeBuffer(buffer, `${outputDir}/openai_${file.split('.')[0]}_${file.split('.')[1]}.${format}`, 'm4a', format);
 }
 
 async function googleSpeech() {
@@ -60,9 +56,6 @@ async function googleVideoInt() {
 }
 
 async function main() {
-
-  // await workWithStorage()
-
   await openaiWhisperStorage();
   // googleSpeech();
   // googleVideoInt();
