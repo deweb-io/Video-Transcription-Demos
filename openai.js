@@ -20,6 +20,7 @@ async function transcribeFilePath(file, outputPath, format='text') {
 // file type is needed for open ai - not sure we need to pass the correct one, but it must be supported.
 async function transcribeBuffer(buffer, outputPath, fileType='mp4', format='srt') {
     try {
+          // https://github.com/openai/openai-node/issues/77
           const audioReadStream = Readable.from(buffer);
           audioReadStream.path = `file.${fileType}`;
           let openai = new OpenAIApi(new Configuration({apiKey}));
