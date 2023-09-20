@@ -8,6 +8,7 @@ const googleSpeechToText = require('./google_speech_to_text');
 
 const mediaDir = 'media';
 const outputDir = 'output';
+const debatesDir = 'debates';
 
 try {
   fs.mkdirSync(outputDir);
@@ -25,8 +26,8 @@ async function getBufferFileFromStorage(file) {
 }
 
 async function openaiWhisperLocal() {
-  const file = '0ctZiGonbQRmd0sYy1bV.mp4';
-  const mediaFile = `${mediaDir}/video/${file}`;
+  const file = 'ben_vs_anna_debate.m4a';
+  const mediaFile = `${mediaDir}/audio/${file}`;
   console.log(`will transcribe: ${mediaFile}`);
   const format = 'srt';
   await openai.transcribeFilePath(mediaFile, `${outputDir}/openai_${file.split('.')[0]}_${file.split('.')[1]}.${format}`, format);
@@ -55,8 +56,26 @@ async function googleVideoInt() {
   await googleVideoIntelligence.transcribe(gcsUri, `${outputDir}/google_video_intelligence_${format}.text`);
 }
 
+async function processDebate() {
+  const debateName = 'ben_vs_anna_debate_2';
+  const transcriptArray = [
+    {'debater': 'Anna',
+      'text' : fs.readFileSync(`${debatesDir}/ben_vs_anna/debate_2/anna_1.txt`)}, 
+      {'debater': 'Ben',
+      'text' : fs.readFileSync(`${debatesDir}/ben_vs_anna/debate_2/ben_1.txt`)},
+      {'debater': 'Anna',
+      'text' : fs.readFileSync(`${debatesDir}/ben_vs_anna/debate_2/anna_2.txt`)},
+      {'debater': 'Ben',
+        'text' : fs.readFileSync(`${debatesDir}/ben_vs_anna/debate_2/ben_2.txt`)},
+  ]
+  await openai.processDebate(transcriptArray, debateName);
+
+}
+
 async function main() {
-  await openaiWhisperStorage();
+  await processDebate();
+  // await openaiWhisperLocal();
+  // await openaiWhisperStorage();
   // googleSpeech();
   // googleVideoInt();
 }
